@@ -1,0 +1,1 @@
+flask pdfplumber python-docx spacy nltk

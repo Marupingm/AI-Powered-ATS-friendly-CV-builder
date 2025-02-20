@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Scanner & AI CV Builder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 ATS Resume Scanner & AI CV Builder</h1>
+        <p>Upload your resume and paste a job description to check your ATS compatibility or build an AI-enhanced CV.</p>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <textarea name="job_description" placeholder="Paste Job Description Here" required></textarea>
+            <input type="file" name="resume" accept=".pdf,.docx">
+            <button type="submit">Scan Resume</button>
+        </form>
+        
+        <div class="cv-builder">
+            <h2>📄 Build Your AI-Powered ATS-Friendly CV</h2>
+            <form method="POST" action="/build-cv">
+                <label for="template">Choose a CV Template:</label>
+                <select id="template" name="template">
+                    <option value="classic">Classic</option>
+                    <option value="modern">Modern</option>
+                    <option value="professional">Professional</option>
+                </select>
+                <input type="text" name="name" placeholder="Full Name" required>
+                <input type="text" name="email" placeholder="Email" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <textarea name="skills" id="skills" placeholder="List Your Skills (comma-separated)" required></textarea>
+                <button type="button" onclick="fetchAI('skills')">🔍 AI Suggest Skills</button>
+                <textarea name="experience" id="experience" placeholder="Describe Your Work Experience" required></textarea>
+                <button type="button" onclick="fetchAI('experience')">✨ AI Improve Experience</button>
+                <textarea name="education" id="education" placeholder="List Your Education" required></textarea>
+                <button type="button" onclick="fetchAI('education')">📚 AI Suggest Education</button>
+                <button type="submit">Generate CV</button>
+            </form>
+        </div>
+        
+        <div class="cv-preview">
+            <h2>📄 CV Preview</h2>
+            <div id="cv-output" class="cv-document classic-template">
+                <h1 id="preview-name"></h1>
+                <p><strong>Email:</strong> <span id="preview-email"></span></p>
+                <p><strong>Phone:</strong> <span id="preview-phone"></span></p>
+                <hr>
+                <h2>Skills</h2>
+                <p id="preview-skills"></p>
+                <h2>Experience</h2>
+                <p id="preview-experience"></p>
+                <h2>Education</h2>
+                <p id="preview-education"></p>
+            </div>
+        </div>
+        
+        {% if score is not none and resume_text is not none %}
+            <div class="results">
+                <h2>✅ ATS Score: {{ score }}%</h2>
+                <h3>🔹 Matched Keywords:</h3>
+                <ul>
+                    {% for word in matches %}
+                        <li>{{ word }}</li>
+                    {% endfor %}
+                </ul>
+                
+                {% if score < 50 %}
+                <div class="improvement-tips">
+                    <h3>🔧 Improve Your Resume</h3>
+                    <p>Your score is below 50%. Consider the following suggestions to enhance your resume:</p>
+                    <ul>
+                        <li>🔹 Add more keywords from the job description.</li>
+                        <li>🔹 Use a clean, simple resume format without tables or images.</li>
+                        <li>🔹 Ensure all relevant skills and experiences are clearly stated.</li>
+                        <li>🔹 Tailor your resume specifically to the job posting.</li>
+                        <li>🔹 Use action verbs to describe your accomplishments.</li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        document.querySelectorAll("input, textarea").forEach(input => {
+            input.addEventListener("input", function() {
+                document.getElementById("preview-" + this.name).textContent = this.value;
+            });
+        });
+        
+        document.getElementById("template").addEventListener("change", function() {
+            let cvOutput = document.getElementById("cv-output");
+            cvOutput.className = "cv-document " + this.value + "-template";
+        });
+        
+        function fetchAI(field) {
+            fetch('/generate-ai', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ field: field })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.suggestion) {
+                    document.getElementById(field).value = data.suggestion;
+                    document.getElementById("preview-" + field).textContent = data.suggestion;
+                } else if (data.error) {
+                    alert("AI Error: " + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred while fetching AI suggestions.");
+            });
+        }
+    </script>
+</body>
+</html>
