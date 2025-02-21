@@ -37,7 +37,7 @@
 
         <!-- Optimized CV Section -->
         <div id="optimized-cv-section" {% if ai_suggestions is not none %}style="display: block;"{% endif %}>
-            <h2>✨ Optimized CV instructions/h2>
+            <h2>✨ Optimized CV instructions </h2>
             <textarea id="optimized-cv-editor" readonly>{{ ai_suggestions if ai_suggestions else '' }}</textarea>
             <button type="button" onclick="downloadOptimizedCV()">💾 save instructions</button>
         </div>
