@@ -1,4 +1,4 @@
-#!/home/innowave620/Documents/ATS-friendly-CV-builder/ats-scanner/venv/bin/python
+#!/home/innowave620/Documents/ATS-friendly-CV-builder/ats-scanner/venv/bin/python3.11
 """A command line tool for extracting text and images from PDF and
 output it to plain text, html, xml or tags."""
 import argparse

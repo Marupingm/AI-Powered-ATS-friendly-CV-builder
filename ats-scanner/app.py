@@ -5,6 +5,10 @@ from extract_text import extract_text
 from match_keywords import match_keywords
 import groq  # type: ignore
 
+import spacy
+nlp = spacy.load("en_core_web_sm")  # This is the small model
+
+
 app = Flask(__name__)
 app.secret_key = "super_secret_key"
 
@@ -16,7 +20,6 @@ UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 client = groq.Client(api_key=GROQ_API_KEY)
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -131,5 +134,9 @@ def clear_session():
     session.clear()
     return jsonify({"message": "Session cleared"}), 200
 
+import os
+
 if __name__ == "__main__":
     app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)

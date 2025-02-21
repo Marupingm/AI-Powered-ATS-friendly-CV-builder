@@ -1,0 +1,9 @@
+__pycache__/
+.venv/
+spacy_models/en_core_web_md/
+spacy_models/en_core_web_lg/
+
+venv/
+__pycache__/
+spacy/
+uploads/
