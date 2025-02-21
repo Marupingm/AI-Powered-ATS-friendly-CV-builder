@@ -13,7 +13,7 @@ descriptions, and provides AI-generated suggestions for improvement.
 
 ## 📌 Live Demo
 Check out the deployed version of the project:
-[ATS Resume Scanner](https://your-deployment-url.com)
+[ATS Resume Scanner]([https://your-deployment-url.com](https://ats-friendly-cv-builder-production.up.railway.app/))
 
 ## 🛠 Tech Stack
 - Python (Flask)
