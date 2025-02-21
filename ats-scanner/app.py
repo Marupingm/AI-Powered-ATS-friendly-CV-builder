@@ -131,6 +131,5 @@ def clear_session():
     session.clear()
     return jsonify({"message": "Session cleared"}), 200
 
-
 if __name__ == "__main__":
     app.run(debug=True)
