@@ -19,6 +19,7 @@ def extract_text(file_path):
     else:
         raise ValueError("Unsupported file type. Only PDF and DOCX are supported.")
 
+
 def extract_text_from_pdf(pdf_path):
     """Extract text from a PDF file."""
     text = ""
@@ -26,6 +27,7 @@ def extract_text_from_pdf(pdf_path):
         for page in pdf.pages:
             text += page.extract_text() + "\n" if page.extract_text() else ""
     return text.strip()
+
 
 def extract_text_from_docx(docx_path):
     """Extract text from a DOCX file."""

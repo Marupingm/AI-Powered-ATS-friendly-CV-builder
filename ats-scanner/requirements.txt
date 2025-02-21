@@ -1,1 +1,6 @@
-flask pdfplumber python-docx spacy nltk
+Flask==2.3.2
+fpdf2==2.7.4
+pdfplumber==0.9.0
+python-docx==0.8.11
+spacy==3.6.1
+groq

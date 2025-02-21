@@ -1,4 +1,4 @@
-#!/home/innowave620/ats-scanner/venv/bin/python3
+#!/home/innowave620/Documents/ATS-friendly-CV-builder/ats-scanner/venv/bin/python
 """Extract pdf structure in XML format"""
 import logging
 import os.path

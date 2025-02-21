@@ -1,6 +1,5 @@
 from keyword_extraction import extract_keywords
 
-
 def match_keywords(resume_text, job_description):
     resume_words = extract_keywords(resume_text)
     job_words = extract_keywords(job_description)
@@ -13,5 +12,5 @@ def match_keywords(resume_text, job_description):
 
     print("✅ Matched Keywords:", matches)  # Debugging line
     print("✅ ATS Score:", match_score)  # Debugging line
-    
+
     return match_score, matches
