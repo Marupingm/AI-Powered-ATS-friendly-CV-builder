@@ -4,10 +4,10 @@ from fpdf import FPDF
 from extract_text import extract_text
 from match_keywords import match_keywords
 import groq  # type: ignore
-
 import spacy
-nlp = spacy.load("en_core_web_sm")  # This is the small model
 
+# Load SpaCy model
+nlp = spacy.load("en_core_web_sm")  # Use the small model to reduce size
 
 app = Flask(__name__)
 app.secret_key = "super_secret_key"
@@ -16,6 +16,7 @@ app.secret_key = "super_secret_key"
 GROQ_API_KEY = "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"
 LLAMA_MODEL = "llama3-70b-8192"
 
+# Upload folder setup
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -134,11 +135,8 @@ def clear_session():
     session.clear()
     return jsonify({"message": "Session cleared"}), 200
 
-import os
 
+# Ensure the app uses Railway-assigned port
 if __name__ == "__main__":
-   
-    import os
-
-port = int(os.environ.get("PORT", 5000))  # Use Railway-assigned port
-app.run(host="0.0.0.0", port=port, debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Get assigned port or default to 5000
+    app.run(host="0.0.0.0", port=port, debug=True)
