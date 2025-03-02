@@ -1,6 +1,6 @@
 # ATS Resume Scanner
 
-ATS Resume Scanner is an open-source web application that helps job seekers optimize their resumes for 
+AI Powered ATS Resume Scanner is an open-source web application that helps job seekers optimize their resumes for 
 Applicant Tracking Systems (ATS).The application extracts text from resumes, matches keywords from job 
 descriptions, and provides AI-generated suggestions for improvement.
 
