@@ -7,13 +7,22 @@ import groq
 import json
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key'  # Change this to a secure secret key
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'your-secret-key-change-this')  # Change this in production
 
 # Initialize Groq client
-client = groq.Groq()
+if not os.environ.get('GROQ_API_KEY'):
+    print("Warning: GROQ_API_KEY environment variable is not set. AI features will not work.")
+    client = None
+else:
+    client = groq.Groq()
 
 def analyze_resume(resume_text, job_description):
     """Analyze resume against job description using Groq API."""
+    if not client:
+        return {'score': 75, 'analysis': 'AI analysis unavailable - API key not configured', 
+                'missing_elements': ['API key not configured'], 
+                'suggestions': ['Please configure GROQ_API_KEY to enable AI features']}
+
     prompt = f"""You are an expert ATS (Applicant Tracking System) and resume analyzer. 
     Analyze the following resume against the job description and provide:
     1. A score out of 100
@@ -50,6 +59,9 @@ def analyze_resume(resume_text, job_description):
 
 def optimize_resume(resume_text, job_description):
     """Generate optimization suggestions using Groq API."""
+    if not client:
+        return "AI optimization unavailable - Please configure GROQ_API_KEY to enable AI features"
+
     prompt = f"""As an expert resume writer and ATS optimization specialist, provide detailed suggestions 
     to optimize this resume for the given job description. Focus on:
     1. Content improvements
